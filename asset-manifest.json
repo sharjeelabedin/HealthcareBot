@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/healthcare-bot/static/css/main.c952dd25.css",
+    "main.js": "/healthcare-bot/static/js/main.dc027637.js",
+    "static/js/787.008d3e18.chunk.js": "/healthcare-bot/static/js/787.008d3e18.chunk.js",
+    "static/media/Login.png": "/healthcare-bot/static/media/Login.05e7a0656117cdab96a1.png",
+    "index.html": "/healthcare-bot/index.html",
+    "main.c952dd25.css.map": "/healthcare-bot/static/css/main.c952dd25.css.map",
+    "main.dc027637.js.map": "/healthcare-bot/static/js/main.dc027637.js.map",
+    "787.008d3e18.chunk.js.map": "/healthcare-bot/static/js/787.008d3e18.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c952dd25.css",
+    "static/js/main.dc027637.js"
+  ]
+}
