@@ -1,0 +1,12 @@
+.h-validation-error__message {
+  font-size: 13px;
+  color: $g-error !important;
+  padding-left: 10px;
+}
+
+.h-validation-error__wrapper {
+  margin-bottom: 5px;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+}

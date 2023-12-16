@@ -1,0 +1,28 @@
+//////////////////////////
+// Typography Mixins    //
+//////////////////////////
+
+@mixin h1 {
+  font-size: 45px;
+}
+
+@mixin h2 {
+  font-size: 38px;
+}
+
+@mixin h3 {
+  font-size: 28px;
+}
+
+@mixin h4 {
+  font-size: 21px;
+}
+
+@mixin h5 {
+  font-size: 20px;
+}
+
+@mixin h6 {
+  font-size: 16px;
+}
+

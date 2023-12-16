@@ -1,0 +1,25 @@
+.custom-input {
+  height: 35px !important;
+  background: $g-white;
+  border: 1px solid $form-input-border-color;
+  border-radius: $form-input-border-radius !important;
+  color: rgb(120, 128, 144) !important;
+  font-weight: lighter;
+  font-size: 13px !important;
+  &:hover,
+  &:active,
+  &:focus {
+    border-color: $g-brand-color-1 !important;
+    border-right-width: 1px !important;
+    box-shadow: 0 0 0 2px rgba(54, 84, 226, 0.2) !important;
+  }
+
+  input[type='text'],
+  input[type='email'],
+  input[type='password'],
+  input[type='number'],
+  input[type='search'] {
+    height: 30px !important;
+    padding-left: 8px;
+  }
+}

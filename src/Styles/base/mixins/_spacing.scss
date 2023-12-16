@@ -1,0 +1,155 @@
+//////////////////////////////
+// Spacing top and bottom   //
+//////////////////////////////
+@mixin space-bottom-xs {
+  margin-bottom: 0;
+  padding-bottom: 10px;
+}
+
+@mixin space-bottom-sm {
+  margin-bottom: 0;
+  padding-bottom: 15px;
+}
+
+@mixin space-bottom-default {
+  margin-bottom: 0;
+  padding-bottom: 20px;
+}
+
+@mixin space-bottom-md {
+  margin-bottom: 0;
+  padding-bottom: 20px;
+}
+
+@mixin space-top-md {
+  margin-top: 0;
+  padding-top: 20px;
+}
+
+@mixin space-bottom-lg {
+  margin-bottom: 0;
+  padding-bottom: 45px;
+}
+
+@mixin space-bottom-lg-plus {
+  margin-bottom: 0;
+  padding-bottom: 50px;
+}
+
+@mixin space-bottom-xl {
+  margin-bottom: 0;
+  padding-bottom: 60px;
+}
+
+//////////////////////////////
+// Spacing top and bottom   //
+//////////////////////////////
+// Extra Small Top
+@mixin spacing-top-xs {
+  padding-top: 20px;
+  @include bp-sm {
+    padding-top: 25px;
+  }
+  @include bp-md {
+    padding-top: 25px;
+  }
+}
+
+// Extra Small Bottom
+@mixin spacing-bottom-xs {
+  padding-bottom: 25px;
+  @include bp-sm {
+    padding-bottom: 30px;
+  }
+  @include bp-md {
+    padding-bottom: 30px;
+  }
+}
+
+// Small Top
+@mixin spacing-top-sm {
+  padding-top: 40px;
+  @include bp-sm {
+    padding-top: 50px;
+  }
+  @include bp-md {
+    padding-top: 60px;
+  }
+}
+
+// Small Bottom
+@mixin spacing-bottom-sm {
+  padding-bottom: 40px;
+  @include bp-sm {
+    padding-bottom: 50px;
+  }
+  @include bp-md {
+    padding-bottom: 60px;
+  }
+}
+
+// Medium Top
+@mixin spacing-top-md {
+  padding-top: 50px;
+  @include bp-sm {
+    padding-top: 65px;
+  }
+  @include bp-md {
+    padding-top: 75px;
+  }
+}
+
+// Medium Bottom
+@mixin spacing-bottom-md {
+  padding-bottom: 50px;
+  @include bp-sm {
+    padding-bottom: 65px;
+  }
+  @include bp-md {
+    padding-bottom: 75px;
+  }
+}
+
+// Large Top
+@mixin spacing-top-lg {
+  padding-top: 70px;
+  @include bp-sm {
+    padding-top: 80px;
+  }
+  @include bp-md {
+    padding-top: 130px;
+  }
+}
+
+// Large Bottom
+@mixin spacing-bottom-lg {
+  padding-bottom: 70px;
+  @include bp-sm {
+    padding-bottom: 80px;
+  }
+  @include bp-md {
+    padding-bottom: 130px;
+  }
+}
+
+// Extra Large Top
+@mixin spacing-top-xl {
+  padding-top: 110px;
+  @include bp-sm {
+    padding-top: 130px;
+  }
+  @include bp-md {
+    padding-top: 150px;
+  }
+}
+
+// Extra Large Bottom
+@mixin spacing-bottom-xl {
+  padding-bottom: 110px;
+  @include bp-sm {
+    padding-bottom: 130px;
+  }
+  @include bp-md {
+    padding-bottom: 150px;
+  }
+}

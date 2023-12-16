@@ -1,0 +1,11 @@
+  /* Style for the resizing handle */
+.resizeHandle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 10px;
+    cursor: col-resize;
+    z-index: 1;
+    background-color: transparent; /* You can change the color as needed */
+}

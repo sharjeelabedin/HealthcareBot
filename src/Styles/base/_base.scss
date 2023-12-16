@@ -1,0 +1,520 @@
+//////////////////////////////////////////////////
+//                                              //
+//  Base                                        //
+//  mugheera.sadiq@astera.com                   //
+//                                              //
+//////////////////////////////////////////////////
+/**
+ * Here we provide very basic styling that most UI's will need. These styles
+ * are applied at the most global level being applied via element selectors,
+ * except for "Headings" which are scoped to classes (see that section for the
+ * info).
+ *
+ * Everything in Base needs to be easily overridden which is really easy to do
+ * as everything in Base sits right at the bottom in terms of specificity.
+ *
+ * ----------------------------------------------------------------------------
+ *
+ * CONTENTS:
+ *
+ * 1. Root element
+ * 2. Links
+ * 3. Images
+ * 4. Forms
+ * 5. Print
+ * 6. Gatsby
+ * 7. Reach Router
+ */
+
+////////////////////////////////////
+// 1. Root Element
+////////////////////////////////////
+html,
+body {
+  font-family: $g-font-base;
+  font-size: $g-font-size-base;
+  font-weight: $g-font-weight-base;
+  line-height: $g-line-height-base;
+  color: $g-text-base;
+  -webkit-font-smoothing: antialiased; //-moz-osx-font-smoothing: grayscale; // todo: uncomment? @Musa
+  text-rendering: optimizeLegibility;
+  height: 100%;
+  width: 100%;
+  user-select: none;
+  // background: #E5ECF0;
+  // background: #E4F3F5;
+  // background: #ebf0f3;
+  background: #fff;
+}
+
+////////////////////////////////////
+// 2. Links
+////////////////////////////////////
+a {
+  color: $g-brand-color-2;
+  text-decoration: none;
+  transition: $g-trans-base;
+  &:hover {
+    color: $g-brand-color-1;
+  }
+}
+
+////////////////////////////////////
+// 3. Images
+////////////////////////////////////
+/**
+ * 1. `[alt]` text is visually offset if images don't load.
+ * 2. Make responsive, i.e. keep images from scaling beyond the width of their
+ *    parents.
+ * 3. Several classes for aligning images and block elements (div, p, table etc.) were introduced in WordPress 2.5: aligncenter, alignleft and alignright. In addition the class alignnone is added to images that are not aligned, so they can be styled differently if needed.
+ *    The same classes are used to align images that have a caption (as of WordPress 2.6). Three additional CSS classes are needed for the captions, and one more for accessibility. Together, the classes are:
+
+ */
+
+img {
+  font-style: italic; // [1]
+  //height: auto; // [2]
+  max-width: 100%; // [2]
+  &.alignnone {
+    margin: 0 $g-space $g-space 0; // [3]
+  }
+  &.alignright {
+    float: right; // [3]
+    margin: 0 0 $g-space $g-space; // [3]
+  }
+  &.alignleft {
+    float: left; // [3]
+    margin: 0 $g-space $g-space 0; // [3]
+  }
+  &.aligncenter {
+    margin: 0 auto $g-space; // [3]
+    display: block; // [3]
+  }
+  // @include bpm-sm {
+  //   &.alignright,
+  //   &.alignleft {
+  //     float: none; // [3]
+  //     margin: 0 $g-space $g-space 0; // [3]g-
+  //   }
+  // }
+}
+
+////////////////////////////////////
+// X. Lists
+////////////////////////////////////
+
+ul {
+  list-style-type: disc;
+  list-style-position: inside;
+}
+li {
+  // margin-left: 20px;
+  padding-left: 0px;
+  list-style-position: outside;
+}
+ol {
+  list-style-type: decimal;
+  list-style-position: inside;
+  margin-bottom: 20px;
+}
+ul ul,
+ol ul {
+  list-style-type: circle;
+  list-style-position: inside;
+  // margin-left: 20px;
+}
+ol ol,
+ul ol {
+  list-style-type: lower-latin;
+  list-style-position: inside;
+  // margin-left: 20px;
+}
+
+////////////////////////////////////
+// 4. Paragraphs
+////////////////////////////////////
+/**
+ * Apply an optional bottom margin to all paragraphs.
+ */
+
+// @if $shell-base-apply-bottom-margin-to-paragraphs {
+//     p:not(:last-child) {
+//         margin-bottom: rem($shell-g-spacing);
+//     }
+// }
+// Paragraph
+p {
+  color: inherit;
+  margin: 0;
+}
+
+// p:not(:last-child) {
+//   margin: 0 0 $g-space;
+// }
+
+///////////////////////
+// 4. Forms          //
+///////////////////////
+// 1. Global Resents
+input,
+textarea,
+select,
+option,
+optgroup,
+button,
+legend,
+fieldset {
+  outline: none;
+  font-family: $form-font-family;
+  font-size: $form-font-size;
+  color: $form-color;
+  // display: block;
+  transition: $g-trans-base;
+}
+
+label {
+  display: block;
+  // width: $form-input-width; // max-width: $form-input-max-width;
+}
+
+// 2. Input and Textarea
+/* Fields with standard width */
+
+input[type='text'],
+input[type='email'],
+input[type='password'],
+input[type='search'],
+input[type='color'],
+input[type='date'],
+input[type='datetime-local'],
+input[type='month'],
+input[type='number'],
+input[type='tel'],
+input[type='time'],
+input[type='url'],
+input[type='week'],
+input[list],
+input[type='file'],
+select,
+textarea {
+  width: $form-input-width; 
+  // max-width: $form-input-max-width;
+  padding: $form-input-height / 5;
+  background-color: $form-input-bg-color;
+  border: 1px solid $form-input-border-color;
+  border-radius: $form-border-radius;
+  // margin-bottom: 20px;
+}
+
+/* Fields with standard height */
+
+input[type='text'],
+input[type='email'],
+input[type='password'],
+input[type='search'],
+input[type='color'],
+input[type='date'],
+input[type='datetime-local'],
+input[type='month'],
+input[type='number'],
+input[type='tel'],
+input[type='time'],
+input[type='url'],
+input[type='week'],
+input[list] {
+  // height: $form-input-height;
+  -webkit-appearance: none;
+}
+
+/* Other */
+
+textarea {
+  -webkit-appearance: none;
+  // resize: none;
+  max-height: $form-textarea-max-height;
+}
+
+input[type='range'] {
+  height: $form-input-height;
+  width: $form-input-width; // max-width: $form-input-max-width;
+}
+
+input[type='search'] {
+  height: $form-input-height;
+  -webkit-appearance: none;
+}
+
+input[type='search']::-webkit-search-cancel-button,
+input[type='search']::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+input[type='checkbox'],
+input[type='radio'] {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+// 3. Select Fields
+select {
+  height: $form-input-height;
+}
+
+// 4. States
+input[disabled],
+textarea[disabled],
+select[disabled],
+option[disabled],
+button[disabled] {
+  color: $g-text-light;
+  cursor: not-allowed;
+  // opacity: 0.7;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+option:focus {
+  border-color: $form-focus-border-color;
+  outline: none;
+}
+
+////////////////////////////////////
+// 5. Print
+////////////////////////////////////
+/**
+ * N.B. it is okay to use `!important` here as we're doing it pre-emptively
+ * i.e. you know you will always want the rule it's applied too to take
+ * precedence.
+ */
+
+@media print {
+  /**
+	 * Global.
+	 */
+  /* stylelint-disable selector-no-universal */
+  *,
+	*::after,
+	*::before,
+	/* stylelint-enable */
+	// First letter
+	blockquote::first-letter,
+	div::first-letter,
+	li::first-letter,
+	p::first-letter, // First line
+	blockquote::first-line,
+	div::first-line,
+	li::first-line,
+	p::first-line {
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #000;
+    text-shadow: none !important;
+  }
+  /**
+	 * Hide elements not really useful on a piece of paper.
+	 */
+  audio,
+  nav,
+  video {
+    display: none !important;
+  }
+  /**
+	 * Ensure all images are responsive.
+	 */
+  img {
+    height: auto !important;
+    max-width: 100% !important;
+  }
+  /**
+	 * Make links always stand out.
+	 */
+  a,
+  a:visited {
+    border-bottom: 0 !important;
+    text-decoration: underline !important;
+  }
+  /**
+	 * Show the `[href]` and `[title]` attribute values of links and
+	 * abbreviations via their `::after` pseudo element.
+	 */
+  a[href]::after {
+    content: ' (' attr(href) ')';
+  }
+  abbr[title]::after {
+    content: ' (' attr(title) ')';
+  }
+  /**
+	 * Don't show links that are fragment identifiers, or use the
+	 * `javascript:` pseudo protocol.
+	 */
+  a[href^='javascript:']::after,
+  a[href^='#']::after {
+    content: '';
+  }
+  /**
+	 * Make the header row repeated at the top of each printed page, see:
+	 * http://css-discuss.incutio.com/wiki/Printing_Tables
+	 */
+  thead {
+    display: table !important;
+  }
+  /**
+	 * Better formatted `<pre>`s.
+	 */
+  pre {
+    white-space: pre-wrap !important;
+  }
+  /**
+	 * Page breaks.
+	 */
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+  blockquote,
+  dl,
+  img,
+  ol,
+  pre,
+  tr,
+  ul {
+    page-break-inside: avoid;
+  }
+  /**
+	 * Orphans and widows.
+	 */
+  h2,
+  h3,
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  /**
+	 * Apply bottom margin to all paragraphs.
+	 */
+  p:not(:last-child) {
+    margin-bottom: 15px;
+  }
+}
+
+////////////////////////////////////
+// 6. Gatsby
+////////////////////////////////////
+#___gatsby,
+#gatsby-focus-wrapper {
+  font-family: $g-font-base;
+  font-size: $g-font-size-base;
+  font-weight: $g-font-weight-base;
+  line-height: $g-line-height-base;
+  color: $g-text-base;
+  -webkit-font-smoothing: antialiased; //-moz-osx-font-smoothing: grayscale; // todo: uncomment? @Musa
+  text-rendering: optimizeLegibility;
+  height: 100%;
+  width: 100%;
+  div:only-child {
+    height: 100%;
+  }
+}
+
+// #gatsby-focus-wrapper {
+//   div:first-child {
+//     height: 100%;
+//     // width: 100%;
+//   }
+// }
+
+////////////////////////////////////
+// 7. Reach/Router
+////////////////////////////////////
+div[role='group'][tabindex] {
+  height: 100%;
+}
+
+////////////////////////////////////
+// 8. React App Container
+////////////////////////////////////
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+.l-root {
+  height: 100%;
+  width: 100%;
+}
+
+/**
+*
+* FORM
+*
+**/
+.c-form-field {
+  margin-bottom: 15px;
+  &__label {
+    font-weight: 600;
+    line-height: 18px;
+    // font-size: 12px;
+    color: $g-gray-color-3;
+    margin-bottom: 2px;
+  }
+  &__error {
+    color: $g-error;
+  }
+
+  .ant-input-number-input {
+    height: 40px;
+  }
+}
+
+.c-form {
+  &__btn-wrapper {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}
+
+.primary-color {
+  color: $g-brand-color-1;
+}
+
+.table-striped-rows tr:nth-child(2n+1) td {
+  background-color: #f3f6fc;
+}
+.table-striped-rows tr:hover {
+  background-color: none !important;
+}
+
+/* For Chrome, Safari, and newer versions of Edge */
+::-webkit-scrollbar {
+  width: 7px !important; /* Width of the scrollbar */
+  height: 7px !important
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #b8b8b8 !important; /* Color of the scrollbar thumb (the draggable part) */
+  border-radius: 30px !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #808080 !important; /* Color of the scrollbar thumb when hovered */
+  cursor: pointer !important;
+}
+
+/* Horizontal scrollbar */
+::-webkit-scrollbar.horizontal {
+  height: 7px !important; /* Height of the horizontal scrollbar */
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  background-color: #b8b8b8 !important; /* Color of the scrollbar thumb (the draggable part) */
+  border-radius: 30px !important;
+}
+
+::-webkit-scrollbar-thumb:horizontal:hover {
+  background-color: #808080 !important; /* Color of the scrollbar thumb when hovered */
+  cursor: pointer !important;
+}

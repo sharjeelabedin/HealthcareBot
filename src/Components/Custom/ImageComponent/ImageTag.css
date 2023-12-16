@@ -1,0 +1,24 @@
+.tag-with-icon {
+  display: flex;
+  align-items: center;
+  margin-right: 4px;
+
+
+}
+
+.icon-component-container {
+  display: flex;
+  justify-content: center;
+}
+
+.svg {
+  width: 20px;
+  height: 20px;
+}
+
+.tag-text {
+  font-weight: 648;
+  font-size: 12px;
+  margin-left: 4px;
+  white-space: nowrap; /* Prevent text wrapping */
+}

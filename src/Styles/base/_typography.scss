@@ -1,0 +1,70 @@
+/**
+ * Here we scope our Base Heading styles to classes instead of the `<hx>`
+ * element selector so our styles are not tied to the semantics of the heading
+ * element, i.e. if you want a `<h4>` to look like a `<h2>` you can easily do
+ * this.
+ */
+
+// Headings
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: $g-font-heading;
+  font-weight: $g-font-weight-heading-base;
+  line-height: $g-line-height-heading;
+  letter-spacing: 0px;
+  color: $g-font-heading-color;
+
+  // text-transform: uppercase;
+  @include space-bottom-md;
+
+  a {
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+  }
+}
+
+b,
+strong {
+  font-weight: 700;
+}
+
+h1,
+.h1 {
+  @include h1;
+}
+
+h2,
+.h2 {
+  @include h2;
+}
+
+h3,
+.h3 {
+  @include h3;
+}
+
+h4,
+.h4 {
+  @include h4;
+}
+
+h5,
+.h5 {
+  @include h5;
+}
+
+h6,
+.h6 {
+  @include h6;
+}

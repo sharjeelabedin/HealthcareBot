@@ -1,0 +1,38 @@
+﻿.text-with-icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.text {
+  margin-right: 10px; /* Adjust the spacing between text and icon */
+}
+
+.icon-button {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.icon-button:hover {
+  opacity: 0.7;
+}
+
+.icon-button:active {
+  opacity: 0.5;
+}
+
+.description-container {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+.description-text
+{
+    font-size: 12px;
+    margin-right: 10px;
+    margin-top: 5px;
+    color: rgb(103, 103, 103) !important;
+    word-wrap: break-word; 
+}

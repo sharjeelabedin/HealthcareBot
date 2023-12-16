@@ -1,0 +1,212 @@
+.ant-card-meta-title {
+  color: #264587;
+  margin-bottom: 1px;
+  font-weight: 700;
+}
+
+.ant-card-meta-description {
+  margin-bottom: 2px;
+  color: gray;
+}
+
+.ant-card-meta-detail>div:not(:last-child) {
+  margin-bottom: 2px;
+}
+
+.ant-avatar {
+  width: 3rem;
+  height: 3rem;
+}
+
+.ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-item,
+.ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-submenu {
+  color: lightgrey
+}
+
+.ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-item:hover,
+.ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-submenu:hover,
+.ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-item-active,
+.ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-submenu-active,
+.ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-item-open,
+.ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-submenu-open,
+.ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-item-selected,
+.ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-submenu-selected {
+  color: black;
+}
+
+.ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-item:hover::after,
+.ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-submenu:hover::after,
+.ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-item-active::after,
+.ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-submenu-active::after,
+.ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-item-open::after,
+.ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-submenu-open::after,
+.ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-item-selected::after,
+.ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-submenu-selected::after {
+  border-bottom: 5px solid orange;
+}
+.ant-drawer-body{
+  padding :0 !important;
+}
+.ant-tabs-tab .ant-tabs-tab-active{
+  padding: 10px;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+.ant-tabs-tab-active{
+  color: black
+}
+.ant-input {
+  font-weight: normal !important;
+}
+
+.ant-spin-nested-loading>div>.ant-spin {
+  max-height: 100%;
+}
+
+.ant-table-container th {
+  color: black !important;
+  font-weight: bold !important;
+  font-size: 12px;
+}
+
+.ant-table-container td {
+  color: #48546c !important;
+}
+
+.ant-table-container {
+  font-size: 12px;
+}
+
+.ant-btn-primary {
+  background-color: #264587;
+  border-color: #264587;
+  background: #264587;
+}
+
+.ant-btn-primary:hover {
+  background-color: #264587;
+  border-color: #264587;
+  background: #264587;
+}
+
+.ant-btn-primary:focus {
+  background-color: #20438f;
+  border-color: #20438f;
+  background: #20438f;
+}
+
+.ant-table-thead>tr>th {
+  background-color: white;
+}
+
+.ant-table.ant-table-bordered>.ant-table-container>.ant-table-content>table>thead>tr>th,
+.ant-table.ant-table-bordered>.ant-table-container>.ant-table-header>table>thead>tr>th,
+.ant-table.ant-table-bordered>.ant-table-container>.ant-table-body>table>thead>tr>th,
+.ant-table.ant-table-bordered>.ant-table-container>.ant-table-summary>table>thead>tr>th,
+.ant-table.ant-table-bordered>.ant-table-container>.ant-table-content>table>tbody>tr>td,
+.ant-table.ant-table-bordered>.ant-table-container>.ant-table-header>table>tbody>tr>td,
+.ant-table.ant-table-bordered>.ant-table-container>.ant-table-body>table>tbody>tr>td,
+.ant-table.ant-table-bordered>.ant-table-container>.ant-table-summary>table>tbody>tr>td,
+.ant-table.ant-table-bordered>.ant-table-container>.ant-table-content>table>tfoot>tr>th,
+.ant-table.ant-table-bordered>.ant-table-container>.ant-table-header>table>tfoot>tr>th,
+.ant-table.ant-table-bordered>.ant-table-container>.ant-table-body>table>tfoot>tr>th,
+.ant-table.ant-table-bordered>.ant-table-container>.ant-table-summary>table>tfoot>tr>th,
+.ant-table.ant-table-bordered>.ant-table-container>.ant-table-content>table>tfoot>tr>td,
+.ant-table.ant-table-bordered>.ant-table-container>.ant-table-header>table>tfoot>tr>td,
+.ant-table.ant-table-bordered>.ant-table-container>.ant-table-body>table>tfoot>tr>td,
+.ant-table.ant-table-bordered>.ant-table-container>.ant-table-summary>table>tfoot>tr>td {
+  border-right: 2px solid #dfe4ef;
+  border-bottom: 1.5px solid #dfe4ef;
+}
+.ant-card-body {
+   padding: 0px; 
+}
+.ant-pagination-item-active {
+  font-weight: 700 !important;
+  background: #f08e36 !important;
+  border-color: #f08e36 !important;
+  border-top-color: rgb(240, 142, 54) !important;
+  border-right-color: rgb(240, 142, 54) !important;
+  border-bottom-color: rgb(240, 142, 54) !important;
+  border-left-color: rgb(240, 142, 54) !important;
+  color: white !important;
+}
+.ant-pagination-item-active:hover {
+  font-weight: 700;
+  background: #f08e36;
+  border-color: #f08e36;
+  border-top-color: rgb(240, 142, 54);
+  border-right-color: rgb(240, 142, 54);
+  border-bottom-color: rgb(240, 142, 54);
+  border-left-color: rgb(240, 142, 54);
+  color: white;
+}
+.ant-pagination-item-active:focus {
+  font-weight: 700;
+  background: #f08e36;
+  border-color: #f08e36;
+  border-top-color: rgb(240, 142, 54);
+  border-right-color: rgb(240, 142, 54);
+  border-bottom-color: rgb(240, 142, 54);
+  border-left-color: rgb(240, 142, 54);
+  color: white;
+}
+.ant-pagination-item {
+  font-weight: 700;
+  background: #f9f9f9 ;
+  box-shadow: 0 3px 10px #dfe4ef;
+  border: 1px solid #f9f9f9;
+  color: black;
+}
+.ant-pagination-item:hover {
+  font-weight: 700;
+  background: #f9f9f9 ;
+  box-shadow: 0 3px 10px #dfe4ef;
+  border: 1px solid #f9f9f9;
+  color: black;
+}
+.ant-pagination-item-active a {
+  color: white !important;
+}
+.ant-progress-bg {
+  width: 97%;
+  height: 10px !important;
+  color: green !important;
+  background-color: #4ec631 !important;
+}
+.ant-radio-button-wrapper:not(:first-child)::before{
+  background-color: #4c669b !important;
+  margin-top: 5px !important;
+  height: 70% !important;
+  width: 2px;
+}
+
+.ant-btn span:last-child{
+  font-size: 13px;
+}
+
+.ant-btn .anticon{
+  font-size: 16px;
+}
+
+.ant-btn-primary[disabled], .ant-btn-primary[disabled]:hover, .ant-btn-primary[disabled]:focus, .ant-btn-primary[disabled]:active{
+    color: rgb(255, 255, 255);
+    border-color: #6e7fa3;
+    background: #6e7fa3;
+}
+
+.ant-select-item-option-content{
+  font-size: 12px !important;
+}
+
+.ant-table-column-title{
+  z-index: 0;
+}
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #474747;
+  text-shadow: 0 0 0.25px currentcolor;
+}
+.ant-tabs-tab-btn {
+  color: #adadad;
+  text-shadow: 0 0 0.25px currentcolor;
+}

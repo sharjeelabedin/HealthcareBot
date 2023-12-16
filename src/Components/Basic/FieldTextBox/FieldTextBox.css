@@ -1,0 +1,42 @@
+﻿.text-with-icon {
+  display: flex;
+  align-items: center;
+}
+
+.text {
+  margin-right: 10px; /* Adjust the spacing between text and icon */
+  display: flex;
+  align-items: center;
+}
+
+.icon-button {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.icon-button:hover {
+  opacity: 0.7;
+}
+
+.icon-button:active {
+  opacity: 0.5;
+}
+
+.description-container {
+  margin-top: 10px;
+}
+
+.text-description {
+  font-size: 18px;
+  color: #0e0e0e;
+  margin-right: 10px;
+  margin-top: 5px;
+  word-wrap: break-word;
+  overflow-wrap: break-word; /* Added property for better word wrapping */
+  word-break: break-word; /* Added property for better word wrapping */
+  white-space: normal; /* Added property to wrap long words */
+}

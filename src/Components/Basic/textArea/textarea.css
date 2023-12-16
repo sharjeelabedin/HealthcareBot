@@ -1,0 +1,20 @@
+.custom-text-area-container {
+    position: relative;
+}
+  
+.text-area-wrapper {
+    position: relative; 
+}
+
+.custom-text-area {
+    /* padding-right: 32px !important; Adjust padding to accommodate the suffix icon */
+    box-sizing: border-box !important; /* Include padding in the width calculation */
+    width: 100%  !important; /* Ensure the text area takes up the full width */
+}
+
+.suffix-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+}
