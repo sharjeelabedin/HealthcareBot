@@ -17,7 +17,7 @@
   margin-top: 20px;
   width: 100%;
   flex-shrink: 0;
-  border-radius: 6px;
+  border-radius: 10px;
   border: 1px solid #c7c5c5;
 
   background: #fff;
@@ -54,8 +54,7 @@
 .HistoryBoxContent {
   display: flex;
   align-items: flex-start;
-  max-height: 400px;
-  min-height: 320px;
+  height : 60vh;
   overflow-y: scroll;
   justify-content: space-between; /* overflow-y: scroll;   */
 }
@@ -102,6 +101,7 @@
   line-height: normal;
   flex: 1;
   width: 5%;
+  cursor: pointer;
 }
 .SubmitButton {
   border-radius: 8.463px;
@@ -124,4 +124,27 @@ textarea:hover,
 textarea:focus-visible,
 textarea:focus {
   border: none !important; /* Remove the border on hover and when focused */
+}
+
+.ql-container.ql-snow{
+  border: none !important;
+}
+.ql-toolbar.ql-snow{
+  border: none !important;
+}
+::-webkit-scrollbar {
+  width: 10px; /* Change this value to adjust scrollbar width */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track color */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; /* Thumb color */
+  border-radius: 5px; /* Rounded corners */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b9b8b8; /* Thumb color on hover */
 }

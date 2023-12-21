@@ -19,6 +19,7 @@ import {
   PlusCircleFilled,
   CloudUploadOutlined,
   FileOutlined,
+  CheckOutlined,
 } from "@ant-design/icons";
 
 import "./home.index.css";
@@ -139,6 +140,7 @@ const Home: React.FC = () => {
   const [isNewRecording, setIsNewRecording] = useState(true);
   const [audioFile, setAudioFile] = useState<any>(null);
   const [isFile, setIsFile] = useState(false);
+  const [isDone, setIsDone] = useState(false);
   const [audioUrl, setAudioUrl] = useState<any>("");
   const fileInputRef = useRef<any>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -233,12 +235,6 @@ const Home: React.FC = () => {
     }
   };
 
-  const playRecording = () => {
-    const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
-    const audioUrl = URL.createObjectURL(audioBlob);
-    const audio = new Audio(audioUrl);
-    audio.play();
-  };
   const formatTime = (totalSeconds: number): string => {
     const hours = `0${Math.floor(totalSeconds / 3600)}`.slice(-2);
     const minutes = `0${Math.floor((totalSeconds % 3600) / 60)}`.slice(-2);
@@ -257,6 +253,7 @@ const Home: React.FC = () => {
       }
 
       setIsLoading(true);
+      setIsDone(false);
 
       const config = {
         headers: {
@@ -271,14 +268,29 @@ const Home: React.FC = () => {
         formData,
         config
       );
+      if (response.data.summary !== null) {
+        dispatch(setTranscriptState(response.data.transcript));
+        dispatch(setSummaryState(response.data.summary));
 
-      dispatch(setTranscriptState(response.data.transcript));
-      dispatch(setSummaryState(response.data.summary));
+        setIsLoading(false);
+        setIsDone(true);
 
-      setIsLoading(false);
-      navigate("/result");
+        setTimeout(() => {
+          navigate("/result");
+        }, 2000);
+      } else {
+        // setIsLoading(false);
+        // setIsDone(false);
+        setIsLoading(false);
+        setIsDone(true);
+
+        setTimeout(() => {
+          navigate("/result");
+        }, 2000);
+      }
     } catch (err: any) {
       setIsLoading(false);
+      setIsDone(false);
       navigate("/result");
     }
   };
@@ -299,8 +311,8 @@ const Home: React.FC = () => {
               justifyContent: "center",
               borderRadius: "100%",
               backgroundColor: "#ea323a",
-              height: "200px",
-              width: "200px",
+              height: "180px",
+              width: "180px",
               marginTop: "3.5rem",
             }}
           >
@@ -404,10 +416,24 @@ const Home: React.FC = () => {
             disabled={!audioFile && audioChunks.length === 0}
             onClick={() => {
               handleGenerateSummary();
-              // navigate("/result");
             }}
           >
-            <span style={{ marginLeft: "10px" }}>Generate Summary</span>
+            {!isLoading && !isDone ? (
+              <span style={{ marginLeft: "10px" }}>Generate Summary</span>
+            ) : isDone && !isLoading ? (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <span>
+                  <CheckOutlined style={{ color: "white", fontSize: "20px" }} />
+                </span>{" "}
+                <span style={{ marginLeft: "10px" }}>Summary Generated</span>
+              </div>
+            ) : null}
           </Button>
           <div style={{ width: "300px" }}>
             <Divider style={{ borderColor: "#afafbc" }}>Or</Divider>
@@ -450,6 +476,10 @@ const Home: React.FC = () => {
       </>
     );
   };
+
+  useEffect(() => {
+    setIsDone(false);
+  }, []);
   return (
     <Space
       direction="vertical"
@@ -457,7 +487,12 @@ const Home: React.FC = () => {
       size={[0, 48]}
     >
       <Layout style={{ height: "100vh" }}>
-        <Sider width={"300px"} style={siderStyle}>
+        <Sider
+          breakpoint="lg"
+          collapsedWidth="0"
+          width={"300px"}
+          style={siderStyle}
+        >
           {SiderRenderer()}
         </Sider>
         <Layout>

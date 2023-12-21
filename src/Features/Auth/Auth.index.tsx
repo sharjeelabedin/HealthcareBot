@@ -12,7 +12,7 @@ const Authentication: React.FC = () => {
     <div style={{ display: "flex", height: "100vh" }}>
       <div
         style={{
-          flex: "1",
+          flex: "0.7",
           backgroundImage: `url(${myImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
