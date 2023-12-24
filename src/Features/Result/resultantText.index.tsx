@@ -1,20 +1,24 @@
 import "./resultantText.index.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button, Col, Input, Modal, Row, Switch } from "antd";
 import HeaderLayout from "Layout/Header/header.index";
 import { useAppSelector } from "Store/hooks";
-import { selectSummary, selectTranscript } from "Features/Auth/redux/selectors";
+import { selectSummary } from "Features/Auth/redux/selectors";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { CheckOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 const ResultantText = () => {
+  const navigate = useNavigate();
   const summary = useAppSelector(selectSummary);
+  const historyBoxRef = useRef<any>(null);
   const [displayText, setDisplayText] = useState("");
   const [showNotes, setShowNotes] = useState(false);
   const [notes, setNotes] = useState("");
   const [isEdit, setEdit] = useState(false);
   const [editText, setEditText] = useState("");
+  const [textDone, setTextDone] = useState(false);
 
   const formatText = (text: string) => {
     let formattedText = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
@@ -28,16 +32,33 @@ const ResultantText = () => {
     setEditText(formattedText);
     const interval = setInterval(() => {
       if (currentIndex <= formattedText.length) {
+        setTextDone(false);
         setDisplayText(formattedText.substring(0, currentIndex));
         currentIndex++;
       } else {
+        setTextDone(true);
         clearInterval(interval);
       }
-    }, 10); // Adjust the interval for speed control
+    }, 1);
 
     return () => clearInterval(interval);
   }, [summary]);
 
+  const scrollToBottom = () => {
+    if (historyBoxRef.current) {
+      const { current } = historyBoxRef;
+      current.scrollTop = current.scrollHeight - current.clientHeight;
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [displayText]);
+
+
+  useEffect(()=>{
+    console.log(displayText);
+  },[displayText])
   const onChangeSwitch = (e: any) => {
     setShowNotes(e);
   };
@@ -58,19 +79,46 @@ const ResultantText = () => {
         >
           <div>
             <div className="HistoryHeading">Summary Notes</div>
-            <div className="HistoryDescription">AI Assisstant Output</div>
+            <div className="HistoryDescription">
+              <span
+                onClick={() => {
+                  navigate("/Home");
+                }}
+                style={{
+                  cursor: "pointer",
+                  fontWeight: "600",
+                  paddingRight: "5px",
+                  color: "green",
+                }}
+              >
+                {"<"}
+              </span>
+              <span
+                onClick={() => {
+                  navigate("/Home");
+                }}
+                style={{
+                  cursor: "pointer",
+                  fontWeight: "600",
+                  marginRight: "15px",
+                  color: "green",
+                }}
+              >
+                {"Back"}
+              </span>
+              AI Assisstant Output
+            </div>
           </div>
           <div>
             <div style={{ display: "flex", alignItems: "center" }}>
-              {/* <label style={{ marginRight: "12px" }}>Notes</label> */}
               <Switch
-                style={{ marginRight: "12px", height: "22px" }}
-                checkedChildren="Hide Notes"
+                style={{ marginRight: "12px", height: "23.5px" }}
+                checkedChildren="Notes"
                 onChange={onChangeSwitch}
-                unCheckedChildren="Visible Notes"
+                unCheckedChildren="Notes"
                 checked={showNotes}
               />
-              <Button type="primary" danger style={{ width: "150px" }}>
+              <Button type="primary" danger style={{ width: "80px" }}>
                 Publish
               </Button>
             </div>
@@ -85,12 +133,13 @@ const ResultantText = () => {
                 style={{ marginRight: "15px" }}
               ></div>
             </div>
-            <div className="HistoryBoxContent">
+            <div className="HistoryBoxContent" ref={historyBoxRef}>
               {isEdit ? (
                 <ReactQuill
                   theme="snow"
                   onChange={(e: any) => {
                     setEditText(e);
+                    setDisplayText(e.replace(/<\/p><p>/g, "<br>"));
                   }}
                   value={editText}
                   style={{
@@ -104,11 +153,12 @@ const ResultantText = () => {
                 <div
                   style={{ paddingLeft: !showNotes ? "10rem" : "2rem" }}
                   className="HistoryBoxContentText"
-                  dangerouslySetInnerHTML={{ __html: displayText }}
+                  dangerouslySetInnerHTML={{
+                    __html: displayText,
+                  }}
                 ></div>
               )}
 
-              {/* <div className="HistoryBoxContentText" dangerouslySetInnerHTML={{__html:displayText}}></div> */}
               <div
                 style={{
                   paddingRight: !showNotes ? "10rem" : "2rem",
@@ -120,6 +170,9 @@ const ResultantText = () => {
                     className="HistoryBoxAction"
                     style={{ marginTop: "0.8rem", cursor: "pointer" }}
                     onClick={() => {
+                      let tempEditText = editText;
+                      tempEditText = tempEditText.replace(/<\/p><p>/g, "<br>");
+                      setDisplayText(tempEditText);
                       setEdit(false);
                     }}
                   >
@@ -130,9 +183,18 @@ const ResultantText = () => {
                 ) : (
                   <div
                     className="HistoryBoxAction"
-                    style={{ marginTop: "0.8rem", cursor: "pointer" }}
+                    title={
+                      !textDone
+                        ? "Please wait untile the AI assistant write the complete result"
+                        : ""
+                    }
+                    style={{
+                      marginTop: "0.8rem",
+                      cursor: textDone ? "pointer" : "not-allowed",
+                      opacity: textDone ? 1 : 0.5,
+                    }}
                     onClick={() => {
-                      setEdit(true);
+                      if (textDone) setEdit(true);
                     }}
                   >
                     <svg
@@ -196,12 +258,13 @@ const ResultantText = () => {
                     style={{ marginRight: "15px" }}
                   ></div>
                 </div>
-                <div className="HistoryBoxContent">
+                <div className="HistoryBoxContent" ref={historyBoxRef}>
                   {isEdit ? (
                     <ReactQuill
                       theme="snow"
                       onChange={(e: any) => {
                         setEditText(e);
+                        setDisplayText(e.replace(/<\/p><p>/g, "<br>"));
                       }}
                       value={editText}
                       style={{
@@ -214,7 +277,10 @@ const ResultantText = () => {
                     <div
                       style={{ paddingLeft: !showNotes ? "10rem" : "2rem" }}
                       className="HistoryBoxContentText"
-                      dangerouslySetInnerHTML={{ __html: displayText }}
+                      ref={historyBoxRef}
+                      dangerouslySetInnerHTML={{
+                        __html: displayText,
+                      }}
                     ></div>
                   )}
 
@@ -229,6 +295,9 @@ const ResultantText = () => {
                         className="HistoryBoxAction"
                         style={{ marginTop: "0.8rem", cursor: "pointer" }}
                         onClick={() => {
+                          let tempEditText = editText;
+                          tempEditText = tempEditText.replace(/<\/p><p>/g, "<br>");
+                          setDisplayText(tempEditText);
                           setEdit(false);
                         }}
                       >
@@ -239,9 +308,18 @@ const ResultantText = () => {
                     ) : (
                       <div
                         className="HistoryBoxAction"
-                        style={{ marginTop: "0.8rem", cursor: "pointer" }}
+                        title={
+                          !textDone
+                            ? "Please wait untile the AI assistant write the complete result"
+                            : ""
+                        }
+                        style={{
+                          marginTop: "0.8rem",
+                          cursor: textDone ? "pointer" : "not-allowed",
+                          opacity: textDone ? 1 : 0.5,
+                        }}
                         onClick={() => {
-                          setEdit(true);
+                          if (textDone) setEdit(true);
                         }}
                       >
                         <svg

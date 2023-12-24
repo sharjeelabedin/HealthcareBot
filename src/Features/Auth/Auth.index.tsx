@@ -4,7 +4,7 @@ import { LockFilled, MailFilled } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import "./Auth.index.css"
 import myImage from "Assets/images/Login.png";
-
+import Logo from "Assets/images/Logo.png"
 const Authentication: React.FC = () => {
   // Replace this with your image URL
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const Authentication: React.FC = () => {
     <div style={{ display: "flex", height: "100vh" }}>
       <div
         style={{
-          flex: "0.7",
+          flex: "0.6",
           backgroundImage: `url(${myImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -36,8 +36,8 @@ const Authentication: React.FC = () => {
         }}
       >
         <Form style={{ width: "40%" }}>
-          <Form.Item>
-            <h1 style={{ textAlign: "center" }}>Login</h1>
+          <Form.Item style={{display:'flex', justifyContent:'center'}}>
+            <img src={Logo} alt="" height={80}/>
           </Form.Item>
           <Form.Item>
             <Input

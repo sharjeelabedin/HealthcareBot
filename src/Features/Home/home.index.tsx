@@ -7,7 +7,6 @@ import {
   Divider,
   Layout,
   Space,
-  Upload,
 } from "antd";
 import { useNavigate } from "react-router-dom";
 import {
@@ -21,12 +20,12 @@ import {
   FileOutlined,
   CheckOutlined,
 } from "@ant-design/icons";
+import Logo from "Assets/images/Logo.png";
 
 import "./home.index.css";
 import HeaderLayout from "Layout/Header/header.index";
 import axios from "axios";
 import FormData from "form-data";
-import fs from "fs";
 import { useAppDispatch } from "Store/hooks";
 import { setSummaryState, setTranscriptState } from "Features/Auth/redux/slice";
 
@@ -101,30 +100,37 @@ const SiderRenderer = () => {
   };
   return (
     <>
-      <h1
+      <div
         style={{
-          fontSize: "28px",
-          color: "#383c3d",
-          marginTop: "-20px",
-          marginBottom: "-20px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          height: "100%",
         }}
       >
-        Logo
-      </h1>
-      <Collapse
-        expandIconPosition={"end"}
-        bordered={false}
-        items={items}
-        defaultActiveKey={["1"]}
-        onChange={onChange}
-      />
-      <div style={{ width: "100%", padding: "5px" }}>
-        <Button style={{ width: "100%" }}>
-          <span style={{ marginRight: "15px" }}>
-            <PlusCircleFilled />
-          </span>
-          Start a Visit
-        </Button>
+        <div>
+          <img
+            src={Logo}
+            alt=""
+            height={70}
+            style={{ marginTop: "1.5rem", marginBottom: "-40px" }}
+          />
+          <Collapse
+            expandIconPosition={"end"}
+            bordered={false}
+            items={items}
+            defaultActiveKey={["1"]}
+            onChange={onChange}
+          />
+        </div>
+        <div style={{ display: "flex", justifyContent: "center", padding: "5px" }}>
+          <Button style={{width:'100%', margin:'10px'}}>
+            <span style={{ marginRight: "15px" }}>
+              <PlusCircleFilled />
+            </span>
+            Start a Visit
+          </Button>
+        </div>
       </div>
     </>
   );
@@ -406,7 +412,7 @@ const Home: React.FC = () => {
             style={{
               marginTop: "1.5rem",
               height: "40px",
-              width: "300px",
+              width: "220px",
               fontSize: "16px",
               backgroundColor: "#e93139",
               fontWeight: "500",
@@ -435,7 +441,7 @@ const Home: React.FC = () => {
               </div>
             ) : null}
           </Button>
-          <div style={{ width: "300px" }}>
+          <div style={{ width: "220px" }}>
             <Divider style={{ borderColor: "#afafbc" }}>Or</Divider>
             <div style={{ lineHeight: 0 }}>
               <Button
