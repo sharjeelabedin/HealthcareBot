@@ -7,6 +7,7 @@ import {
   Divider,
   Layout,
   Space,
+  notification,
 } from "antd";
 import { useNavigate } from "react-router-dom";
 import {
@@ -28,6 +29,7 @@ import axios from "axios";
 import FormData from "form-data";
 import { useAppDispatch } from "Store/hooks";
 import { setSummaryState, setTranscriptState } from "Features/Auth/redux/slice";
+import { NotificationPlacement } from "antd/es/notification/interface";
 
 const { Sider, Content } = Layout;
 
@@ -123,8 +125,10 @@ const SiderRenderer = () => {
             onChange={onChange}
           />
         </div>
-        <div style={{ display: "flex", justifyContent: "center", padding: "5px" }}>
-          <Button style={{width:'100%', margin:'10px'}}>
+        <div
+          style={{ display: "flex", justifyContent: "center", padding: "5px" }}
+        >
+          <Button style={{ width: "100%", margin: "10px" }}>
             <span style={{ marginRight: "15px" }}>
               <PlusCircleFilled />
             </span>
@@ -139,6 +143,7 @@ const SiderRenderer = () => {
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [api, contextHolder] = notification.useNotification();
   const [mediaRecorder, setMediaRecorder] = useState<any>(null);
   const [audioChunks, setAudioChunks] = useState<any>([]);
   const [isRecording, setIsRecording] = useState<any>(false);
@@ -155,6 +160,14 @@ const Home: React.FC = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
+  };
+  const openNotification = (placement: NotificationPlacement) => {
+    api.info({
+      message: "Error",
+      description: "AI Assistant is unable to generate results",
+      placement,
+      type : "error"
+    });
   };
 
   const handleFileChange = async (event: any) => {
@@ -270,7 +283,7 @@ const Home: React.FC = () => {
       };
 
       const response = await axios.post(
-        "https://avicenna-service-2.onrender.com/upload/",
+        "http://34.244.127.50:5000/upload/",
         formData,
         config
       );
@@ -285,24 +298,20 @@ const Home: React.FC = () => {
           navigate("/result");
         }, 2000);
       } else {
-        // setIsLoading(false);
-        // setIsDone(false);
         setIsLoading(false);
-        setIsDone(true);
-
-        setTimeout(() => {
-          navigate("/result");
-        }, 2000);
+        setIsDone(false);
+        openNotification("topRight");
       }
     } catch (err: any) {
       setIsLoading(false);
       setIsDone(false);
-      navigate("/result");
+      openNotification("topRight");
     }
   };
   const ContentRenderer = () => {
     return (
       <>
+        {contextHolder}
         <div
           style={{
             display: "flex",

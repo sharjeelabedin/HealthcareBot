@@ -55,10 +55,6 @@ const ResultantText = () => {
     scrollToBottom();
   }, [displayText]);
 
-
-  useEffect(()=>{
-    console.log(displayText);
-  },[displayText])
   const onChangeSwitch = (e: any) => {
     setShowNotes(e);
   };
