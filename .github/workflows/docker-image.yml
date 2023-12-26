@@ -18,7 +18,9 @@ jobs:
 
       - name: Save Docker image as tar
         run: docker save -o artifacts.tar frontend:latest
-      	run: chmod +r artifacts.tar
+        
+      - name: Giving read permission
+        run: chmod +r artifacts.tar
 
       - name: Copy artifacts to EC2 server
         uses: appleboy/scp-action@master
