@@ -39,8 +39,7 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
             # Commands to execute on the EC2 server
-            sudo su
-            docker load -i /opt/test/artifacts.tar
-            docker stop frontend
-            docker rm frontend
-            docker run -d --name frontend -p 3000:3000 frontend:latest
+            sudo docker load -i /opt/test/artifacts.tar
+            sudo docker stop frontend
+            sudo docker rm frontend
+            sudo docker run -d --name frontend -p 3000:3000 frontend:latest
