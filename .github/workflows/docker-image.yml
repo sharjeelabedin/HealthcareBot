@@ -29,7 +29,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           source: artifacts.tar
-          target: /opt/frontend/artifacts.tar
+          target: /opt/test/artifacts.tar
 
       - name: SSH into EC2 server and deploy
         uses: appleboy/ssh-action@master
@@ -39,6 +39,6 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
             # Commands to execute on the EC2 server
-            docker load -i /opt/frontend/artifacts.tar
+            docker load -i /opt/test/artifacts.tar
             docker-compose down
             docker-compose up -d
