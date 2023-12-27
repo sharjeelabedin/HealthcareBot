@@ -42,4 +42,4 @@ jobs:
             sudo docker load -i /opt/test/frontend.tar
             sudo docker stop frontend
             sudo docker rm frontend
-            sudo docker run -d --name frontend -p 3000:3000 frontend:latest
+            sudo docker run -d --restart unless-stopped --name frontend -p 3000:3000 frontend:latest
