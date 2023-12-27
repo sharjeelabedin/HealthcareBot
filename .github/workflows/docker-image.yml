@@ -17,18 +17,18 @@ jobs:
         run: docker-compose build
 
       - name: Save Docker image as tar
-        run: docker save -o artifacts.tar frontend:latest
+        run: docker save -o frontend.tar frontend:latest
         
       - name: Giving read permission
-        run: chmod +r artifacts.tar
+        run: chmod +r frontend.tar
 
-      - name: Copy artifacts to EC2 server
+      - name: Copy frontend to EC2 server
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
-          source: artifacts.tar
+          source: frontend.tar
           target: /opt/test/
 
       - name: SSH into EC2 server and deploy
@@ -39,7 +39,7 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
             # Commands to execute on the EC2 server
-            sudo docker load -i /opt/test/artifacts.tar
+            sudo docker load -i /opt/test/frontend.tar
             sudo docker stop frontend
             sudo docker rm frontend
             sudo docker run -d --name frontend -p 3000:3000 frontend:latest
