@@ -283,7 +283,7 @@ const Home: React.FC = () => {
       };
 
       const response = await axios.post(
-        "http://34.244.127.50:5000/upload/",
+        "http://3.254.246.135:5000/upload/",
         formData,
         config
       );
