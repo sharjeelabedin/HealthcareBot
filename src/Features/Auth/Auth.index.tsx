@@ -1,25 +1,45 @@
 import React from "react";
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button, Checkbox, message } from "antd";
 import { LockFilled, MailFilled } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import "./Auth.index.css"
+import "./Auth.index.css";
 import myImage from "Assets/images/Login.png";
-import Logo from "Assets/images/Logo.png"
+import Logo from "Assets/images/Logo.png";
 const Authentication: React.FC = () => {
-  // Replace this with your image URL
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const error = () => {
+    messageApi.open({
+      type: "error",
+      content: "Unable to login, Invalid credentials",
+    });
+  };
+
+  const onFinish = (values: any) => {
+    if (
+      values &&
+      values.email === "fawad@rumilabs.ai" &&
+      values.password === "rumilabs@pakistan123"
+    ) {
+      navigate("/Home");
+      return;
+    }
+    error();
+  };
   const navigate = useNavigate();
   return (
     <div style={{ display: "flex", height: "100vh" }}>
+      {contextHolder}
       <div
         style={{
           flex: "0.6",
           backgroundImage: `url(${myImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          display : "flex",
-          alignItems : "center",
-          flexDirection :"column",
-          justifyContent : "center"
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+          justifyContent: "center",
         }}
       >
         <h1 className="login-cover-heading1">Elevating</h1>
@@ -35,20 +55,31 @@ const Authentication: React.FC = () => {
           justifyContent: "center",
         }}
       >
-        <Form style={{ width: "40%" }}>
-          <Form.Item style={{display:'flex', justifyContent:'center'}}>
-            <img src={Logo} alt="" height={80}/>
+        <Form
+          style={{ width: "40%" }}
+          onFinish={onFinish}
+          initialValues={{ email: "", password: "" }}
+          autoComplete="off"
+        >
+          <Form.Item style={{ display: "flex", justifyContent: "center" }}>
+            <img src={Logo} alt="" height={80} />
           </Form.Item>
-          <Form.Item>
+          <Form.Item
+            name="email"
+            rules={[{ required: true, message: "Please enter your email!" }]}
+          >
             <Input
               size="large"
               prefix={
                 <MailFilled style={{ marginRight: "5px", color: "grey" }} />
               }
-              placeholder="Username"
+              placeholder="Email"
             />
           </Form.Item>
-          <Form.Item>
+          <Form.Item
+            rules={[{ required: true, message: "Please enter your password!" }]}
+            name={"password"}
+          >
             <Input.Password
               prefix={
                 <LockFilled
@@ -64,23 +95,21 @@ const Authentication: React.FC = () => {
             <Form.Item name="remember" valuePropName="checked">
               <Checkbox>Remember me</Checkbox>
             </Form.Item>
-            <a style={{ marginTop: "5px" }} href="">
+            <a style={{ marginTop: "5px" }}>
               Forgot Password
             </a>
           </div>
           <Form.Item>
             <Button
-              style={{
+             style={{
                 height: "40px",
                 fontSize: "16px",
                 backgroundColor: "#e93139",
                 fontWeight: "bold",
+                width: "100%",
               }}
               type="primary"
-              block
-              onClick={() => {
-                navigate("/Home");
-              }}
+              htmlType="submit"
             >
               Login
             </Button>

@@ -251,6 +251,16 @@ const Home: React.FC = () => {
       mediaRecorder.stop();
       setIsRecording(false);
       setTimer(0);
+      setAudioChunks([]);
+    }
+  };
+  
+  const doneRecording = () => {
+    setIsNewRecording(true);
+    if (mediaRecorder) {
+      mediaRecorder.stop();
+      setIsRecording(false);
+      setTimer(0);
     }
   };
 
@@ -404,7 +414,7 @@ const Home: React.FC = () => {
           )}
           <CheckCircleFilled
             style={{ cursor: "pointer", fontSize: "40px" }}
-            onClick={stopRecording}
+            onClick={doneRecording}
           />
         </div>
         <div
