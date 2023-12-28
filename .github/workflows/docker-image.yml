@@ -45,3 +45,6 @@ jobs:
             sudo docker run -d --restart unless-stopped --name frontend -p 3000:3000 frontend:latest
             sudo /etc/init.d/nginx reload
             sudo docker system prune -f
+        
+      - name: Waiting for frontend to spin up
+        run: sleep 60
