@@ -283,7 +283,7 @@ const Home: React.FC = () => {
       };
 
       const response = await axios.post(
-        "http://3.254.246.135:5000/upload/",
+        "https://backend.rumilabs.ai/upload/",
         formData,
         config
       );
