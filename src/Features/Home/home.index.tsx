@@ -30,6 +30,7 @@ import FormData from "form-data";
 import { useAppDispatch } from "Store/hooks";
 import { setSummaryState, setTranscriptState } from "Features/Auth/redux/slice";
 import { NotificationPlacement } from "antd/es/notification/interface";
+import { authenticateUser } from "Utilities/authenticate";
 
 const { Sider, Content } = Layout;
 
@@ -166,7 +167,7 @@ const Home: React.FC = () => {
       message: "Error",
       description: "AI Assistant is unable to generate results",
       placement,
-      type : "error"
+      type: "error",
     });
   };
 
@@ -254,7 +255,7 @@ const Home: React.FC = () => {
       setAudioChunks([]);
     }
   };
-  
+
   const doneRecording = () => {
     setIsNewRecording(true);
     if (mediaRecorder) {
@@ -503,6 +504,13 @@ const Home: React.FC = () => {
   };
 
   useEffect(() => {
+    try {
+      const decodedString = atob(localStorage.getItem("token") ?? "");
+      const decodedObj = JSON.parse(decodedString);
+      if(!authenticateUser(decodedObj)) navigate("/")
+    } catch (e: any) {
+      navigate("/")
+    }
     setIsDone(false);
   }, []);
   return (

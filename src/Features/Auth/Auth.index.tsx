@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "./Auth.index.css";
 import myImage from "Assets/images/Login.png";
 import Logo from "Assets/images/Logo.png";
+import { authenticateUser } from "Utilities/authenticate";
 const Authentication: React.FC = () => {
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -16,11 +17,10 @@ const Authentication: React.FC = () => {
   };
 
   const onFinish = (values: any) => {
-    if (
-      values &&
-      values.email === "fawad@rumilabs.ai" &&
-      values.password === "rumilabs@pakistan123"
-    ) {
+    if (authenticateUser(values)) {
+      const jsonString = JSON.stringify(values);
+      const base64String = btoa(jsonString);
+      localStorage.setItem("token", base64String);
       navigate("/Home");
       return;
     }
@@ -95,13 +95,11 @@ const Authentication: React.FC = () => {
             <Form.Item name="remember" valuePropName="checked">
               <Checkbox>Remember me</Checkbox>
             </Form.Item>
-            <a style={{ marginTop: "5px" }}>
-              Forgot Password
-            </a>
+            <a style={{ marginTop: "5px" }}>Forgot Password</a>
           </div>
           <Form.Item>
             <Button
-             style={{
+              style={{
                 height: "40px",
                 fontSize: "16px",
                 backgroundColor: "#e93139",
