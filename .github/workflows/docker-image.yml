@@ -39,7 +39,7 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
             # Commands to execute on the EC2 server
-            sudo docker load -i /opt/test/frontend.tardocker system prune -f
+            sudo docker load -i /opt/test/frontend.tar
             sudo docker stop frontend
             sudo docker rm frontend
             sudo docker run -d --restart unless-stopped --name frontend -p 3000:3000 frontend:latest
