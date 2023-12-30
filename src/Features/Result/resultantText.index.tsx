@@ -114,7 +114,7 @@ const ResultantText = () => {
                 unCheckedChildren="Notes"
                 checked={showNotes}
               />
-              <Button type="primary" danger style={{ width: "80px" }}>
+              <Button onClick={()=>{navigate("/Home")}} type="primary" danger style={{ width: "80px" }}>
                 Publish
               </Button>
             </div>

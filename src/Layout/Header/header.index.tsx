@@ -41,7 +41,7 @@ const HeaderLayout = () => {
         className={"header"}
         style={{ display: "flex", alignItems: "center" }}
       >
-        <Input
+        {/* <Input
           style={{ background: "#393d3e", border: "none", color: "white" }}
           prefix={
             <SearchOutlined
@@ -49,7 +49,7 @@ const HeaderLayout = () => {
             />
           }
           placeholder="Type to search ..."
-        />
+        /> */}
       </div>
       <div style={{ display: "flex", alignItems: "center" }}>
         <div style={{ marginRight: "20px" }}>
@@ -84,12 +84,12 @@ const HeaderLayout = () => {
                   fontSize: "13px",
                 }}
               >
-                Michel Tom
+                Omer Naveed
               </div>
               <div
                 style={{ marginRight: "8px", color: "white", fontSize: "12px" }}
               >
-                Doctor
+                Consultant
               </div>
             </div>
 
