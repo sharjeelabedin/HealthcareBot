@@ -163,7 +163,7 @@ const Home: React.FC = () => {
     }
   };
   const openNotification = (placement: NotificationPlacement) => {
-    api.error({
+    api.info({
       message: "Error",
       description: "AI Assistant is unable to generate results",
       placement,
@@ -178,12 +178,6 @@ const Home: React.FC = () => {
       setIsFile(true);
       setAudioFile(selectedFile);
     }
-    api.success({
-      message: "Success",
-      description: "Audio file uploaded successfully",
-      placement: "topRight",
-      type: "success",
-    });
   };
   let audioStream: any = null;
   useEffect(() => {
@@ -268,12 +262,6 @@ const Home: React.FC = () => {
       mediaRecorder.stop();
       setIsRecording(false);
       setTimer(0);
-      api.success({
-        message: "Success",
-        description: "Recording saved successfully",
-        placement: "topRight",
-        type: "success",
-      });
     }
   };
 
@@ -519,9 +507,9 @@ const Home: React.FC = () => {
     try {
       const decodedString = atob(localStorage.getItem("token") ?? "");
       const decodedObj = JSON.parse(decodedString);
-      if (!authenticateUser(decodedObj)) navigate("/");
+      if(!authenticateUser(decodedObj)) navigate("/")
     } catch (e: any) {
-      navigate("/");
+      navigate("/")
     }
     setIsDone(false);
   }, []);
