@@ -20,6 +20,8 @@ import {
   CloudUploadOutlined,
   FileOutlined,
   CheckOutlined,
+  RestFilled,
+  ReloadOutlined,
 } from "@ant-design/icons";
 import Logo from "Assets/images/Logo.png";
 
@@ -31,7 +33,7 @@ import { useAppDispatch } from "Store/hooks";
 import { setSummaryState, setTranscriptState } from "Features/Auth/redux/slice";
 import { NotificationPlacement } from "antd/es/notification/interface";
 import { authenticateUser } from "Utilities/authenticate";
-
+import  RefreshIcon from "Assets/images/Refresh.png"
 const { Sider, Content } = Layout;
 
 const contentStyle: React.CSSProperties = {
@@ -59,7 +61,7 @@ const AccordionContent = () => {
           borderTop: "1px solid #e5e5e5",
           color: "#383c3d",
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "center",
         }}
       >
         <div
@@ -107,7 +109,7 @@ const SiderRenderer = () => {
         style={{
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between",
+          justifyContent: "center",
           height: "100%",
         }}
       >
@@ -118,23 +120,13 @@ const SiderRenderer = () => {
             height={70}
             style={{ marginTop: "1.5rem", marginBottom: "-40px" }}
           />
-          <Collapse
+          {/* <Collapse
             expandIconPosition={"end"}
             bordered={false}
             items={items}
             defaultActiveKey={["1"]}
             onChange={onChange}
-          />
-        </div>
-        <div
-          style={{ display: "flex", justifyContent: "center", padding: "5px" }}
-        >
-          <Button style={{ width: "100%", margin: "10px" }}>
-            <span style={{ marginRight: "15px" }}>
-              <PlusCircleFilled />
-            </span>
-            Start a Visit
-          </Button>
+          /> */}
         </div>
       </div>
     </>
@@ -154,6 +146,7 @@ const Home: React.FC = () => {
   const [isFile, setIsFile] = useState(false);
   const [isDone, setIsDone] = useState(false);
   const [audioUrl, setAudioUrl] = useState<any>("");
+  const [disableGenerate, setDisableGenerate] = useState(true);
   const fileInputRef = useRef<any>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -209,6 +202,7 @@ const Home: React.FC = () => {
     try {
       setIsFile(false);
       setIsNewRecording(false);
+      setDisableGenerate(false);
       setAudioChunks([]);
       audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const recorder = new MediaRecorder(audioStream);
@@ -248,6 +242,8 @@ const Home: React.FC = () => {
 
   const stopRecording = () => {
     setIsNewRecording(true);
+    setDisableGenerate(true);
+    setAudioFile(null);
     if (mediaRecorder) {
       mediaRecorder.stop();
       setIsRecording(false);
@@ -278,6 +274,12 @@ const Home: React.FC = () => {
       if (isFile) {
         formData.append("file", audioFile);
       } else {
+        setIsNewRecording(true);
+      if (mediaRecorder) {
+        mediaRecorder.stop();
+        setIsRecording(false);
+        setTimer(0);
+      }
         const mergedBlob = new Blob(audioChunks, { type: "audio/mp3" });
         formData.append("file", mergedBlob);
       }
@@ -384,22 +386,35 @@ const Home: React.FC = () => {
             alignItems: "center",
           }}
         >
-          <CloseCircleFilled
-            size={40}
-            height={"10000px"}
+          <div
             style={{
-              cursor: "pointer",
-              fontSize: "40px",
+              cursor:"pointer",
+              backgroundColor: "#383c3d",
+              borderRadius: "50%",
+              height: "50px",
+              width: "50px",
               marginRight: "1.5rem",
+              marginLeft: "1.5rem",
             }}
-            onClick={stopRecording}
-          />
+          >
+            <img src={RefreshIcon} alt="" height={40} style={{marginBottom:'19px'}}               onClick={stopRecording}/>
+            {/* <ReloadOutlined
+              style={{
+                cursor: "pointer",
+                fontSize: "30px",
+                color: "white",
+                marginBottom: "5px",
+              }}
+              onClick={stopRecording}
+            /> */}
+          </div>
           {isRecording ? (
             <PauseCircleFilled
               style={{
                 cursor: "pointer",
                 fontSize: "50px",
                 marginRight: "1.5rem",
+                // marginLeft : "1.5rem"
               }}
               onClick={pauseRecording}
             />
@@ -410,13 +425,14 @@ const Home: React.FC = () => {
                 fontSize: "50px",
                 cursor: "pointer",
                 marginRight: "1.5rem",
+                // marginLeft : "1.5rem"
               }}
             />
           )}
-          <CheckCircleFilled
+          {/* <CheckCircleFilled
             style={{ cursor: "pointer", fontSize: "40px" }}
             onClick={doneRecording}
-          />
+          /> */}
         </div>
         <div
           className="Audio-generate-button"
@@ -439,7 +455,7 @@ const Home: React.FC = () => {
               border: "1px solid #e93139",
             }}
             type="primary"
-            disabled={!audioFile && audioChunks.length === 0}
+            disabled={!audioFile && disableGenerate}
             onClick={() => {
               handleGenerateSummary();
             }}
@@ -507,9 +523,9 @@ const Home: React.FC = () => {
     try {
       const decodedString = atob(localStorage.getItem("token") ?? "");
       const decodedObj = JSON.parse(decodedString);
-      if(!authenticateUser(decodedObj)) navigate("/")
+      if (!authenticateUser(decodedObj)) navigate("/");
     } catch (e: any) {
-      navigate("/")
+      navigate("/");
     }
     setIsDone(false);
   }, []);
@@ -520,7 +536,10 @@ const Home: React.FC = () => {
       size={[0, 48]}
     >
       <Layout style={{ height: "100vh" }}>
-        <Sider
+        
+      <HeaderLayout />
+        <Layout>
+          <Sider
           breakpoint="lg"
           collapsedWidth="0"
           width={"300px"}
@@ -528,8 +547,6 @@ const Home: React.FC = () => {
         >
           {SiderRenderer()}
         </Sider>
-        <Layout>
-          <HeaderLayout />
           <Content style={contentStyle}>{ContentRenderer()}</Content>
         </Layout>
       </Layout>

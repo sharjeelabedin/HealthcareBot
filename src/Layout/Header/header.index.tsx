@@ -10,6 +10,8 @@ import {
 } from "@ant-design/icons";
 import "./header.index.css";
 import { useNavigate } from "react-router-dom";
+import Logo from "Assets/images/Logo.png";
+
 const { Header } = Layout;
 
 
@@ -40,37 +42,18 @@ const HeaderLayout = () => {
       <div
         className={"header"}
         style={{ display: "flex", alignItems: "center" }}
+        
       >
-        <Input
-          style={{ background: "#393d3e", border: "none", color: "white" }}
-          prefix={
-            <SearchOutlined
-              style={{ color: "white", fontSize: "18px", marginRight: "10px" }}
-            />
-          }
-          placeholder="Type to search ..."
-        />
+        {/* <img
+            src={Logo}
+            alt=""
+            height={40}
+            style={{marginLeft:"0.75rem"}}
+            // style={{  marginBottom: "-40px" }}
+          /> */}
       </div>
       <div style={{ display: "flex", alignItems: "center" }}>
-        <div style={{ marginRight: "20px" }}>
-          <CalendarOutlined
-            style={{ fontSize: "20px", margin: "0 0px", color: "white" }}
-          />
-        </div>
-        <div style={{ marginRight: "20px" }}>
-          <Badge count={3}>
-            <MailOutlined
-              style={{ fontSize: "20px", margin: "0 0px", color: "white" }}
-            />
-          </Badge>
-        </div>
-        <div style={{ marginRight: "30px" }}>
-          <Badge count={7}>
-            <MessageOutlined
-              style={{ fontSize: "20px", margin: "0 00px", color: "white" }}
-            />
-          </Badge>
-        </div>
+        
         <Dropdown overlay={menu} placement="bottomRight">
           <div
             style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
