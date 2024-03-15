@@ -120,13 +120,6 @@ const SiderRenderer = () => {
             height={70}
             style={{ marginTop: "1.5rem", marginBottom: "-40px" }}
           />
-          {/* <Collapse
-            expandIconPosition={"end"}
-            bordered={false}
-            items={items}
-            defaultActiveKey={["1"]}
-            onChange={onChange}
-          /> */}
         </div>
       </div>
     </>
@@ -398,15 +391,6 @@ const Home: React.FC = () => {
             }}
           >
             <img src={RefreshIcon} alt="" height={40} style={{marginBottom:'19px'}}               onClick={stopRecording}/>
-            {/* <ReloadOutlined
-              style={{
-                cursor: "pointer",
-                fontSize: "30px",
-                color: "white",
-                marginBottom: "5px",
-              }}
-              onClick={stopRecording}
-            /> */}
           </div>
           {isRecording ? (
             <PauseCircleFilled
@@ -429,10 +413,6 @@ const Home: React.FC = () => {
               }}
             />
           )}
-          {/* <CheckCircleFilled
-            style={{ cursor: "pointer", fontSize: "40px" }}
-            onClick={doneRecording}
-          /> */}
         </div>
         <div
           className="Audio-generate-button"
