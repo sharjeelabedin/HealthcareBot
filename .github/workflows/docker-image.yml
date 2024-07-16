@@ -28,7 +28,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
-          script: sudo mkdir -p /opt/deployment
+          script: mkdir -p /home/ubuntu/deployment
 
       - name: Copy frontend to EC2 server
         uses: appleboy/scp-action@master
@@ -37,7 +37,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           source: frontend.tar
-          target: /opt/deployment/frontend.tar
+          target: /home/ubuntu/deployment/frontend.tar
 
       - name: SSH into EC2 server and deploy
         uses: appleboy/ssh-action@master
@@ -56,7 +56,7 @@ jobs:
               sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
               sudo apt-get update
               sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-              sudo usermod -aG docker $USER
+              sudo usermod -aG docker ubuntu
             else
               echo "Docker is already installed"
             fi
@@ -91,7 +91,7 @@ jobs:
             sudo nginx -s reload
 
             # Load Docker image and deploy
-            sudo docker load -i /opt/deployment/frontend.tar
+            sudo docker load -i /home/ubuntu/deployment/frontend.tar
             
             # Check if the frontend container is running and stop/remove if necessary
             if [ "$(sudo docker ps -q -f name=frontend)" ]; then
