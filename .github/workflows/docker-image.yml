@@ -18,9 +18,17 @@ jobs:
 
       - name: Save Docker image as tar
         run: docker save -o frontend.tar frontend:latest
-        
+
       - name: Giving read permission
         run: chmod +r frontend.tar
+
+      - name: Create deployment directory on EC2 server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: sudo mkdir -p /opt/deployment
 
       - name: Copy frontend to EC2 server
         uses: appleboy/scp-action@master
@@ -29,7 +37,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           source: frontend.tar
-          target: /opt/test/
+          target: /opt/deployment/frontend.tar
 
       - name: SSH into EC2 server and deploy
         uses: appleboy/ssh-action@master
@@ -38,7 +46,6 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
-            # Commands to execute on the EC2 server
             # Check if Docker is installed
             if ! command -v docker &> /dev/null
             then
@@ -83,8 +90,8 @@ jobs:
             EOF'
             sudo nginx -s reload
 
-            # Load the Docker image and deploy
-            sudo docker load -i /opt/test/frontend.tar
+            # Load Docker image and deploy
+            sudo docker load -i /opt/deployment/frontend.tar
             
             # Check if the frontend container is running and stop/remove if necessary
             if [ "$(sudo docker ps -q -f name=frontend)" ]; then
@@ -97,6 +104,6 @@ jobs:
             sudo docker run -d --restart unless-stopped --name frontend -p 3000:3000 frontend:latest
             sudo /etc/init.d/nginx reload
             sudo docker system prune -f
-        
-      - name: Waiting for the frontend to spin up
+
+      - name: Waiting for frontend to spin up
         run: sleep 60
