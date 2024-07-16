@@ -54,13 +54,49 @@ jobs:
               echo "Docker is already installed"
             fi
 
-            # Load Docker image and deploy
+            # Check if Nginx is installed
+            if ! command -v nginx &> /dev/null
+            then
+              echo "Nginx is not installed. Installing Nginx..."
+              sudo apt-get update
+              sudo apt-get install -y nginx
+              sudo systemctl start nginx
+              sudo systemctl enable nginx
+            else
+              echo "Nginx is already installed"
+            fi
+
+            # Configure Nginx to proxy to port 3000
+            sudo bash -c 'cat > /etc/nginx/sites-available/default <<EOF
+            server {
+                listen 80;
+                server_name _;
+
+                location / {
+                    proxy_pass http://localhost:3000;
+                    proxy_set_header Host \$host;
+                    proxy_set_header X-Real-IP \$remote_addr;
+                    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+                    proxy_set_header X-Forwarded-Proto \$scheme;
+                }
+            }
+            EOF'
+            sudo nginx -s reload
+
+            # Load the Docker image and deploy
             sudo docker load -i /opt/test/frontend.tar
-            sudo docker stop frontend || true
-            sudo docker rm frontend || true
+            
+            # Check if the frontend container is running and stop/remove if necessary
+            if [ "$(sudo docker ps -q -f name=frontend)" ]; then
+                sudo docker stop frontend
+                sudo docker rm frontend
+            else
+                echo "Frontend container is not running."
+            fi
+            
             sudo docker run -d --restart unless-stopped --name frontend -p 3000:3000 frontend:latest
             sudo /etc/init.d/nginx reload
             sudo docker system prune -f
         
-      - name: Waiting for frontend to spin up
+      - name: Waiting for the frontend to spin up
         run: sleep 60
