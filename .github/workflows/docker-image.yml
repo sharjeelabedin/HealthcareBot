@@ -9,6 +9,11 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    env:
+      EC2_HOST: ${{ vars.EC2_HOST }}
+      EC2_USERNAME: ${{ vars.EC2_USERNAME }}
+      EC2_PRIVATE_KEY: ${{ vars.EC2_PRIVATE_KEY }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -25,26 +30,26 @@ jobs:
       - name: Create deployment directory on EC2 server
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          host: ${{ env.EC2_HOST }}
+          username: ${{ env.EC2_USERNAME }}
+          key: ${{ env.EC2_PRIVATE_KEY }}
           script: mkdir -p /home/ubuntu/deployment
 
       - name: Copy frontend to EC2 server
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          host: ${{ env.EC2_HOST }}
+          username: ${{ env.EC2_USERNAME }}
+          key: ${{ env.EC2_PRIVATE_KEY }}
           source: frontend.tar
           target: /home/ubuntu/deployment/frontend.tar
 
       - name: SSH into EC2 server and deploy
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          host: ${{ env.EC2_HOST }}
+          username: ${{ env.EC2_USERNAME }}
+          key: ${{ env.EC2_PRIVATE_KEY }}
           script: |
             # Check if Docker is installed
             if ! command -v docker &> /dev/null
