@@ -5,7 +5,6 @@ import PrivateRoute from "./Components/Custom/private_route/PrivateRoute.index";
 import NotFound from "./Components/Basic/not_found/NotFound.index";
 import { PRIVATE_ROUTES, PUBLIC_ROUTES } from "./Config/routes";
 import FullPageLoader from "./Components/Basic/full_page_loader/FullPageLoader.index";
-import NotLicensedIndex from "./Components/Basic/not_licensed/NotLicensed.index";
 
 const Startup = () => {
   return (
