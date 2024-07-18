@@ -280,7 +280,7 @@ const Home: React.FC = () => {
       };
 
       const response = await axios.post(
-        "https://backend.rumilabs.ai/upload/",
+        "https://backend-demo.rumilabs.ai/upload/",
         formData,
         config
       );
