@@ -33,7 +33,7 @@ import { useAppDispatch } from "Store/hooks";
 import { setSummaryState, setTranscriptState } from "Features/Auth/redux/slice";
 import { NotificationPlacement } from "antd/es/notification/interface";
 import { authenticateUser } from "Utilities/authenticate";
-import  RefreshIcon from "Assets/images/Refresh.png"
+import RefreshIcon from "Assets/images/Refresh.png";
 const { Sider, Content } = Layout;
 
 const contentStyle: React.CSSProperties = {
@@ -76,10 +76,6 @@ const AccordionContent = () => {
           <p style={{ marginTop: "-10px" }}>Paused</p>
         </div>
         <div>
-          {/* <FontAwesomeIcon
-            icon={faPauseCircle}
-           
-          /> */}
           <PauseCircleFilled style={{ marginTop: "15px", fontSize: "20px" }} />
         </div>
       </div>
@@ -142,7 +138,7 @@ const Home: React.FC = () => {
   const [disableGenerate, setDisableGenerate] = useState(true);
   const fileInputRef = useRef<any>(null);
   const [isLoading, setIsLoading] = useState(false);
-
+  const chunksRef = useRef<Blob[]>([]);
   const handleButtonClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
@@ -161,6 +157,7 @@ const Home: React.FC = () => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
       setAudioChunks([]);
+      chunksRef.current = [];
       setIsFile(true);
       setAudioFile(selectedFile);
     }
@@ -197,11 +194,13 @@ const Home: React.FC = () => {
       setIsNewRecording(false);
       setDisableGenerate(false);
       setAudioChunks([]);
+      chunksRef.current = [];
       audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const recorder = new MediaRecorder(audioStream);
 
-      recorder.ondataavailable = (e) => {
-        setAudioChunks([...audioChunks, e.data]);
+      recorder.ondataavailable = (e: any) => {
+        setAudioChunks((prevChunks: any) => [...prevChunks, e.data]);
+        chunksRef.current.push(e.data);
       };
 
       recorder.onstop = () => {
@@ -241,26 +240,17 @@ const Home: React.FC = () => {
       mediaRecorder.stop();
       setIsRecording(false);
       setTimer(0);
-      setAudioChunks([]);
     }
   };
-
-  const doneRecording = () => {
-    setIsNewRecording(true);
-    if (mediaRecorder) {
-      mediaRecorder.stop();
-      setIsRecording(false);
-      setTimer(0);
-    }
+  const sleep = (ms: number) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   };
-
   const formatTime = (totalSeconds: number): string => {
     const hours = `0${Math.floor(totalSeconds / 3600)}`.slice(-2);
     const minutes = `0${Math.floor((totalSeconds % 3600) / 60)}`.slice(-2);
     const seconds = `0${totalSeconds % 60}`.slice(-2);
     return `${hours}:${minutes}:${seconds}`;
   };
-
   const handleGenerateSummary = async () => {
     try {
       const formData = new FormData();
@@ -268,12 +258,13 @@ const Home: React.FC = () => {
         formData.append("file", audioFile);
       } else {
         setIsNewRecording(true);
-      if (mediaRecorder) {
-        mediaRecorder.stop();
-        setIsRecording(false);
-        setTimer(0);
-      }
-        const mergedBlob = new Blob(audioChunks, { type: "audio/mp3" });
+        if (mediaRecorder) {
+          mediaRecorder.stop();
+          setIsRecording(false);
+          setTimer(0);
+        }
+        await checkAndSleep(chunksRef.current);
+        const mergedBlob = new Blob(chunksRef.current, { type: "audio/mp3" });
         formData.append("file", mergedBlob);
       }
 
@@ -312,6 +303,12 @@ const Home: React.FC = () => {
       setIsLoading(false);
       setIsDone(false);
       openNotification("topRight");
+    }
+  };
+
+  const checkAndSleep = async (currentChunks: Blob[]) => {
+    while (currentChunks.length === 0) {
+      await sleep(1000);
     }
   };
   const ContentRenderer = () => {
@@ -381,7 +378,7 @@ const Home: React.FC = () => {
         >
           <div
             style={{
-              cursor:"pointer",
+              cursor: "pointer",
               backgroundColor: "#383c3d",
               borderRadius: "50%",
               height: "50px",
@@ -390,7 +387,13 @@ const Home: React.FC = () => {
               marginLeft: "1.5rem",
             }}
           >
-            <img src={RefreshIcon} alt="" height={40} style={{marginBottom:'19px'}}               onClick={stopRecording}/>
+            <img
+              src={RefreshIcon}
+              alt=""
+              height={40}
+              style={{ marginBottom: "19px" }}
+              onClick={stopRecording}
+            />
           </div>
           {isRecording ? (
             <PauseCircleFilled
@@ -516,17 +519,16 @@ const Home: React.FC = () => {
       size={[0, 48]}
     >
       <Layout style={{ height: "100vh" }}>
-        
-      <HeaderLayout />
+        <HeaderLayout />
         <Layout>
           <Sider
-          breakpoint="lg"
-          collapsedWidth="0"
-          width={"300px"}
-          style={siderStyle}
-        >
-          {SiderRenderer()}
-        </Sider>
+            breakpoint="lg"
+            collapsedWidth="0"
+            width={"300px"}
+            style={siderStyle}
+          >
+            {SiderRenderer()}
+          </Sider>
           <Content style={contentStyle}>{ContentRenderer()}</Content>
         </Layout>
       </Layout>
